@@ -2,3 +2,4 @@
 *.exe
 bin/
 !/setup.exe
+ac-library-master
