@@ -20,7 +20,7 @@ int32_t main() {
         edges[v].push_back({u, w});
     }
 
-    ll res = (1<<62);
+    ll res = (1LL<<62);
 
     auto dfs = [&](auto dfs, int visited, ll val, int c) {
         if(c == N-1) {
@@ -32,7 +32,7 @@ int32_t main() {
         }
     };
 
-    dfs(dfs, 0, 0LL, 0);
+    dfs(dfs, 1, 0LL, 0);
     cout << res;
 
 
