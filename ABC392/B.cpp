@@ -15,6 +15,7 @@ int32_t main() {
     for(int i=0; i<N; ++i) {
         if(!v[i]) cout << i << " ";
     }
+    //C以降もupsolveする
 
     return 0;
 }
