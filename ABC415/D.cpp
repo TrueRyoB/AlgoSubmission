@@ -1,43 +1,27 @@
 #include <bits/stdc++.h>
-#include <atcoder/all>
+
 using namespace std;
-using namespace atcoder;
-#define int long long
 
-typedef struct {
-    int a, diff, indexAt;
-}ab;
+using ll = long long;
 
-int32_t main() {
-    int N, M; cin>>N>>M;
-    vector<ab> v(M); 
-    unordered_map<int, int> hash;
-    for(int i=0; i<v.size(); ++i) {
-        int a, b; cin>>a>>b;
-        int diff = a-b;
-        v[i] = {a, diff, i};
-        if(hash.find(diff)==hash.end()) {
-            hash[diff]=i;
-        }
+int main() {
+    ll n;
+    int m;
+    cin >> n >> m;
+    vector<tuple<ll, ll>> ls;
+    for (int i = 0; i < m; i++) {
+        ll a, b;
+        cin >> a >> b;
+        ll d = a - b;
+        ls.emplace_back(d, a);
     }
-    auto custom = [&](auto x, auto y) {
-        return x.diff < y.diff;
-    };
-    int usedBy = -1;
-    sort(v.begin(), v.end(), custom);
-    int cnt = 0;
-    for(int i=0; i<M; ++i) {
-        if(v[i].indexAt < usedBy || N < v[i].a) continue;//同値は消させない作戦(がさつ)
-        int diff = v[i].diff;
-        int add = floor((N-v[i].a)/diff);
-        if(N-(add+1)*diff >=0) add++;
-        N -= add*diff;
-        cnt += add;
-        usedBy = hash[diff];
+    sort(ls.begin(), ls.end());
+    ll ans = 0;
+    for (auto [d, a]: ls) {
+        if (a > n) continue;
+        ll x = (n - a) / d + 1;
+        ans += x;
+        n -= x * d;
     }
-    cout << cnt;
-
-    return 0;
+    cout << ans << endl;
 }
-//無理や...
-//エラー数が増えているのだが..?
