@@ -9,19 +9,15 @@ int32_t main() {
 
     while(T--) {
         int N; cin>>N;
-        string s; cin>>s;
+        string s; cin>>s; s = "0"+s;
         int len = (1<<N);
         vector<bool> dp(len, false); dp[0]=true;
-        for(int i=0; i<len-1; ++i) {
-            if(s[i]=='0') {
-                int base = i+1;
-                for(int bit=base-1; bit>=0; --bit) {
-                    if((base & (1 << bit)) == 0)continue;
-                    int val = base - (1<<bit);
-                    if(dp[val]) {
-                        dp[base]=true;
-                        break;
-                    }
+        for(int i=0; i<len; ++i) {
+            if(s[i]=='0' && dp[i]) {
+                for(int bit=0; bit<N; ++bit) {
+                    if((i & (1<<bit)) != 0) continue;
+                    int next = (1<<bit) + i;
+                    if(s[next]=='0') dp[next]=true;
                 }
             }
         }
@@ -31,16 +27,3 @@ int32_t main() {
 
     return 0;
 }
-//絶対通るべきなのに、通らなくて萎えそう
-//risk at 1
-//safe at 2
-//safe at 1+2
-
-
-//今日の反省
-
-//想定解じゃなさそうなのに、コードを変えなかった
-//デバッグにかなりの時間を費やしていた
-//問題読解にかなりの時間をかけていた
-//C問題もD問題も解けない...
-//まだ灰色...
