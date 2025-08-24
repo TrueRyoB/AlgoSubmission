@@ -272,4 +272,6 @@ int32_t main() {
     return 0;
 }
 
+//自動テストほしい
+
 //g++ -std=c++17 template/helper.cpp -o helper.exe -lstdc++fs -luser32

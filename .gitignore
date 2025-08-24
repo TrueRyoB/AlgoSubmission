@@ -3,3 +3,6 @@
 bin/
 !/setup.exe
 ac-library-master
+node_modules
+package-lock.json
+package.json
