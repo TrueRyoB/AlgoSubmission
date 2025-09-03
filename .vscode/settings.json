@@ -95,7 +95,13 @@
         "typeindex": "cpp",
         "typeinfo": "cpp",
         "variant": "cpp",
-        "fstream": "cpp"
+        "fstream": "cpp",
+        "fenwicktree": "cpp",
+        "mincostflow": "cpp",
+        "modint": "cpp",
+        "segtree": "cpp",
+        "twosat": "cpp",
+        "all": "cpp"
     },
     "C_Cpp.errorSquiggles": "enabled"
 }
