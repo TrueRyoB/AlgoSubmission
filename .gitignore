@@ -10,3 +10,6 @@ template
 !.vscode
 main.cpp
 !lib-shojin
+*.txt
+gen.cpp
+!lib
