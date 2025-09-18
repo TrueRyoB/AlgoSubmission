@@ -25,6 +25,6 @@ public:
       if(primes[m]<=val) l=m;
       else r=m;
     }
-    return l;
+    return l+1<n && abs(primes[l+1]-val)<abs(primes[l]-val) ? primes[l+1] : primes[l];
   }
 };
