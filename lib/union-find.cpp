@@ -1,6 +1,5 @@
 #include <bits/stdc++.h>
 using namespace std;
-//Last updated on Sep 17th, 2025
 
 class UnionFind {
 private:
