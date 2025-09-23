@@ -5,9 +5,10 @@ using namespace std;
 class UnionFind {
 private:
 vector<int> par, rank, siz;
+int nlink;
 
 public:
-  UnionFind(int n): par(n, -1), rank(n, 0), siz(n, -1) {}
+  UnionFind(int n): par(n, -1), rank(n, 0), siz(n, -1), nlink(n) {}
 
   int root(int x) {
     if(par[x]==-1) return x;
@@ -19,6 +20,7 @@ public:
   bool unite(int x, int y) {
     int rx=root(x), ry=root(y);
     if(rx==ry) return false;
+    nlink--;
 
     if(rank[rx]<rank[ry]) swap(rx, ry);
     par[ry] = rx;
@@ -28,5 +30,8 @@ public:
   }
   int size(int x) {
     return siz[root(x)];
+  }
+  int size() {
+    return nlink;
   }
 };
