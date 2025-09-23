@@ -14,6 +14,14 @@ public:
   Trie() {
     root = new Node();
   }
+  ~Trie() {
+    stack<Node*> s; s.push(root);
+    while(!s.empty()) {
+      const Node* n = s.top(); s.pop();
+      for(const auto e: n->to) s.push(e.second);
+      delete n;
+    }
+  }
   int insert(string s) {
     Node* node = root; int res=0;
     for(const auto& c:s) {
@@ -22,15 +30,6 @@ public:
 
       node->to[c]->cnt++;
       node = node->to[c];
-    }
-    return res;
-  }
-  const int check(string s) {
-    Node* node = root; int res=0;
-    for(const auto& c:s) {
-      if(!node->to.count(c)) return res;
-      res+=node->to[c]->cnt;
-      node=node->to[c];
     }
     return res;
   }
