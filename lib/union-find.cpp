@@ -7,7 +7,7 @@ vector<int> par, rank, siz;
 int nlink;
 
 public:
-  UnionFind(int n): par(n, -1), rank(n, 0), siz(n, -1), nlink(n) {}
+  UnionFind(int n): par(n, -1), rank(n, 0), siz(n, 1), nlink(n) {}
 
   int root(int x) {
     if(par[x]==-1) return x;
