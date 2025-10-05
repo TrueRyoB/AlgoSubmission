@@ -16,7 +16,14 @@ public:
     }
   }
   bool isPrime(int val) {
-    return val<n ? primes[val]:false;
+    if(val>=n) return false;
+    int l=0, r=primes.size();
+    while(l+1<r) {
+      int m=l+(r-l)/2;
+      if(primes[m]<=val) l=m;
+      else r=m;
+    }
+    return primes[l]==val;
   }
   int findClosestPrime(int val) {
     int l=0, r=n;
@@ -26,5 +33,12 @@ public:
       else r=m;
     }
     return l+1<n && abs(primes[l+1]-val)<abs(primes[l]-val) ? primes[l+1] : primes[l];
+  }
+  int getFactorCnt(int val) {
+    int res=0;
+    for(int i=0; i<primes.size()&&primes[i]<=val; ++i) while(val>=primes[i]&&val%primes[i]==0) {
+      res++; val/=primes[i];
+    }
+    return res;
   }
 };
