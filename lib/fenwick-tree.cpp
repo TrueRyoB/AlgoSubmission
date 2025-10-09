@@ -19,4 +19,7 @@ public:
     for(++i; i>0; i-=(i&-i)) res+=v[i];
     return res;
   }
+  T range_sum(int l, int r) const {
+    return prefix_sum(r)-prefix_sum(l);
+  }
 };
