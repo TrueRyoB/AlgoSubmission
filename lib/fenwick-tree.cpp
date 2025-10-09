@@ -12,7 +12,7 @@ public:
     v.assign(N, i);
   }
   void add(int i, T val) {
-    for(++i; i<N; i+=(i%(-i))) v[i]+=val;
+    for(++i; i<N; i+=(i&-i)) v[i]+=val;
   }
   T prefix_sum(int i) const {
     T res=0;
@@ -20,6 +20,6 @@ public:
     return res;
   }
   T range_sum(int l, int r) const {
-    return prefix_sum(r)-prefix_sum(l);
+    return prefix_sum(r)-prefix_sum(l-1);
   }
 };
