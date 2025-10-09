@@ -1,22 +1,22 @@
 //可換群限定セグ木 頻く両刀で使われれる
 #include <bits/stdc++.h>
 using namespace std;
-using ll = long long;
 
+template<typename T>
 class FenwickTree {
 private:
-    int N;
-    vector<ll> v;
+  int N;
+  vector<T> v;
 public:
-    FenwickTree(int n): N(n+2) {
-        v.assign(N, 0LL);
-    }
-    void add(int i, ll val) {
-        for(++i; i<N; i+=(i%(-i))) v[i]+=val;
-    }
-    ll prefix_sum(int i) const {
-        ll res=0;
-        for(++i; i>0; i-=(i&-i)) res+=v[i];
-        return res;
-    }
+  FenwickTree(int n, T i): N(n+2) {
+    v.assign(N, i);
+  }
+  void add(int i, T val) {
+    for(++i; i<N; i+=(i%(-i))) v[i]+=val;
+  }
+  T prefix_sum(int i) const {
+    T res=0;
+    for(++i; i>0; i-=(i&-i)) res+=v[i];
+    return res;
+  }
 };
