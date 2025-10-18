@@ -14,26 +14,24 @@ struct RMQ {
     n = x;
   }
 
-  /* lazy eval */
   void eval(int k) {
-    if (lazy[k] == INF) return;  // 更新するものが無ければ終了
-    if (k < n - 1) {             // 葉でなければ子に伝搬
+    if (lazy[k] == INF) return;  
+    if (k < n - 1) {             
       lazy[k * 2 + 1] = lazy[k];
       lazy[k * 2 + 2] = lazy[k];
     }
-    // 自身を更新
     dat[k] = lazy[k];
     lazy[k] = INF;
   }
 
   void update(int a, int b, T x, int k, int l, int r) {
     eval(k);
-    if (a <= l && r <= b) {  // 完全に内側の時
+    if (a <= l && r <= b) {
       lazy[k] = x;
       eval(k);
-    } else if (a < r && l < b) {                     // 一部区間が被る時
-      update(a, b, x, k * 2 + 1, l, (l + r) / 2);  // 左の子
-      update(a, b, x, k * 2 + 2, (l + r) / 2, r);  // 右の子
+    } else if (a < r && l < b) {              
+      update(a, b, x, k * 2 + 1, l, (l + r) / 2); 
+      update(a, b, x, k * 2 + 2, (l + r) / 2, r); 
       dat[k] = min(dat[k * 2 + 1], dat[k * 2 + 2]);
     }
   }
@@ -41,11 +39,11 @@ struct RMQ {
 
   T query_sub(int a, int b, int k, int l, int r) {
     eval(k);
-    if (r <= a || b <= l) {  // 完全に外側の時
+    if (r <= a || b <= l) { 
       return INF;
-    } else if (a <= l && r <= b) {  // 完全に内側の時
+    } else if (a <= l && r <= b) {
       return dat[k];
-    } else {  // 一部区間が被る時
+    } else { 
       T vl = query_sub(a, b, k * 2 + 1, l, (l + r) / 2);
       T vr = query_sub(a, b, k * 2 + 2, (l + r) / 2, r);
       return min(vl, vr);
@@ -53,7 +51,6 @@ struct RMQ {
   }
   T query(int a, int b) { return query_sub(a, b, 0, 0, n); }
 
-  /* debug */
   inline T operator[](int a) { return query(a, a + 1); }
   void print() {
     for (int i = 0; i < 2 * n - 1; ++i) {
