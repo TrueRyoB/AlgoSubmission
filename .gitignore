@@ -14,3 +14,4 @@ main.cpp
 gen.cpp
 !lib
 AHC
+RMQ.cpp
