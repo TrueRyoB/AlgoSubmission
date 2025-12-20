@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-// Last updated on Sep 15th, 2025
+// Last updated on Dec 20th, 2025
 
 template<typename T, typename F>
 class SegmentTree {
@@ -26,6 +26,13 @@ public:
     while(n<len) n *=2;
     v.assign(2*n, identity);
   }
+  SegmentTree(vector<T>& b, T identity, F monoid) :op(monoid), ide(identity) {
+    n=1;
+    while(n<b.size()) n*=2;
+    v.assign(2*n, identity);
+    for(int i=0; i<b.size(); ++i) v[i+n]=b[i];
+    for(int i=n-1; i>=1; --i) v[i]=op(v[i*2], v[i*2+1]);
+  }
   void set(int i, T val) {
     i += n;
     v[i] = val;
@@ -34,7 +41,6 @@ public:
       v[i] = op(v[i*2], v[i*2+1]);
     }
   }
-
   T query(int a, int b) {
     if(a>b) swap(a, b);
     return query_sub(a, b+1, 1, 0, n);
