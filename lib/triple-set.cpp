@@ -14,17 +14,18 @@ struct TupleHash {
   }
 };
 
+template<typename T>
 struct TripleSet {
   unordered_set<
-    tuple<int,int,int>,
+    tuple<T,T,T>,
     TupleHash,
-    equal_to<tuple<int,int,int>>
+    equal_to<tuple<T,T,T>>
   > tripleSet;
 
-  void emplace(int a,int b, int c){
+  void emplace(T a,T b, T c){
     tripleSet.emplace(a, b, c);
   }
-  bool contains(int a, int b, int c){
+  bool contains(T a, T b, T c){
     return tripleSet.find(make_tuple(a,b,c))!=tripleSet.end();
   }
   size_t size() const {
