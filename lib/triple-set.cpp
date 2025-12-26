@@ -22,7 +22,7 @@ struct TripleSet {
     equal_to<tuple<T,T,T>>
   > tripleSet;
 
-  void emplace(T a,T b, T c){
+  void insert(T a,T b, T c){
     tripleSet.emplace(a, b, c);
   }
   bool contains(T a, T b, T c){
