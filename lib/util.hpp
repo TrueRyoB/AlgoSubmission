@@ -1,7 +1,9 @@
 #ifndef LIB_UTIL
 #define LIB_UTIL
 
+#ifdef LOCAL
 #include "std.hpp"
+#endif
 
 //TODO: implement a method for coordinate compression
 template<class T>
