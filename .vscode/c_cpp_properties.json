@@ -5,7 +5,7 @@
       "includePath": [
         "${workspaceFolder}/**"
       ],
-      "defines": [],
+      "defines": ["LOCAL"],
       "compilerPath": "C:/msys64/ucrt64/bin/clang++.exe",
       "cStandard": "c11",
       "cppStandard": "c++20",
