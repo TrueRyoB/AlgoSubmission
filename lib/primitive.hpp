@@ -25,6 +25,15 @@ struct Modint {
   friend ostream& operator<<(ostream& os, const Modint& a) {
     return a.print(os), os;
   }
+  Modint& operator++() {
+    if(++v == MOD) v=0;
+    return *this;
+  }
+  Modint operator++(int) {
+    Modint prev=*this;
+    ++(*this);
+    return prev;
+  }
   Modint& operator+=(const Modint& o) {
     v+=o.v;
     if(v>=MOD) v-=MOD;
