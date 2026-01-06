@@ -5,6 +5,7 @@
 #include <vector>
 #include <cassert>
 #include <string>
+#include <cstdint>
 using namespace std;
 
 template<class T>
@@ -47,6 +48,22 @@ string to_binary(T t) {
   for(int i=0; (1ll<<i)<=t; ++i) res.push_back((t>>i)&1 ? '1':'0');
   reverse(res.begin(), res.end());
   return res;
+}
+
+template<class T>
+inline void next_subgroup(T& k, const T& m) {
+  static_assert(is_integral_v<T>);
+  assert(k>=0 && m>=k);
+  k=(k-1)&m;
+}
+
+//TODO: enrich this operator overloading
+struct b32 {
+  uint32_t v;
+};
+
+ostream& operator<<(ostream& os, b32 b) {
+  return os<<to_binary(b.v);
 }
 
 #endif
