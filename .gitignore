@@ -9,6 +9,8 @@ template
 */
 !.vscode
 main.cpp
+main.py
+bonsai.md
 !lib-shojin
 *.txt
 gen.cpp
