@@ -41,11 +41,12 @@ int lsb(T t) {
 
 //32 -> 10000
 template<class T>
-string to_binary(T t) {
+string to_binary(T t, int len=-1) {
   static_assert(is_integral_v<T>);
   assert(t>=0);
   string res="";
   for(int i=0; (1ll<<i)<=t; ++i) res.push_back((t>>i)&1 ? '1':'0');
+  if(sz(res)<len) res += string(len-sz(res), '0');
   reverse(res.begin(), res.end());
   return res;
 }
