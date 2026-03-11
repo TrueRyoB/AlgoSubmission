@@ -2,26 +2,35 @@ using System;
 using System.IO;
 using System.Text;
 using System.Collections.Generic;
-using System.Text.Json;
-using System.ComponentModel.DataAnnotations;
 
-class Program
+var fs = new FastScanner();
+var sb = new StringBuilder();
+
+
+
+
+
+Console.Write(sb.ToString());
+
+class Nms
 {
-  static void Main()
+  public static T[] Array<T>(int n, Func<T> f)
   {
-    var fs = new FastScanner();
-    var sb = new StringBuilder();
-
-    
-
-
-    Console.Write(sb.ToString());
+    var a = new T[n];
+    for(int i=0;i<n;i++) a[i]=f();
+    return a;
+  }
+  public static T[] Array<T>(int n, T val)
+  {
+    var a = new T[n];
+    for(int i=0;i<n;i++) a[i]=val;
+    return a;
   }
 }
 
 class Graph
 {
-  public static readonly int[] D = {-1, 0, 1, 0, -1};
+  public static readonly int[] D = [-1, 0, 1, 0, -1, -1, 1, 1, -1];
   public const int TRUE = 1;
   public const int FALSE = 0;
   public static long MinPositive(long a, long b)
@@ -86,7 +95,7 @@ class FastScanner
     return buffer[ptr++];
   }
 
-  public int NextInt()
+  public int Int()
   {
     int c;
     while ((c = Read()) <= ' ') if (c == 0) return 0;
@@ -102,7 +111,7 @@ class FastScanner
     return val * sign;
   }
 
-  public long NextLong()
+  public long Long()
   {
     int c;
     while ((c = Read()) <= ' ') if (c == 0) return 0;
@@ -118,7 +127,7 @@ class FastScanner
     return val * sign;
   }
 
-  public string Next()
+  public string String()
   {
     int c;
     while ((c = Read()) <= ' ') if (c == 0) return "";
