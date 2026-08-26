@@ -1,43 +1,208 @@
 # MakaCoder
-My repository for competitive programming.
-<br>
-<br>
+
+A personal development environment for competitive programming.
+
+MakaCoder automates repetitive parts of the competitive programming workflow: initializing solution files, building and running programs, generating submission-ready code, and testing solutions against brute-force references.
+
+The goal is simple: spend less time managing the development environment and more time solving problems.
+
+
 [![Rating](https://badgen.org/img/atcoder/TrueRyoB/rating/algorithm?style=for-the-badge&label=Algorithm)](https://atcoder.jp/users/TrueRyoB?contestType=algo)
 
-## Commands / コマンド
+## Features
 
-Bare commands, active only inside this repo (via a `chpwd` hook in `~/.zshrc`).
-このリポジトリ内でのみ有効なコマンドです（`~/.zshrc` の `chpwd` フックで有効化）。
+### Solution Management
 
-| Command | English | 日本語 |
-| --- | --- | --- |
-| `rst` | Reset `main.cs` from `active/template.cs`. | `active/template.cs` から `main.cs` を初期化。 |
-| `run` | Build & run `main.cs` (`run <file>` reads stdin from a file). | `main.cs` をビルド＆実行（`run <file>` でファイルを標準入力に）。 |
-| `wind` | Copy a submission-ready `main.cs` (only the used library) to the clipboard. | 使用中のライブラリだけを含む提出用 `main.cs` をクリップボードにコピー。 |
-| `stress` | Random-test `main.cs` against a brute-force reference; print mismatching cases. | `main.cs` を総当たり解と乱数テストで比較し、不一致ケースを表示。 |
+Initialize a solution from a reusable template:
 
-### `stress` details / 詳細
+```bash
+rst
+```
 
-Write a generator and a reference solution, then run `stress`.
-ジェネレータと参照解を用意して `stress` を実行します。
+This resets `main.cs` from the active template.
 
-- `gen.cs` / `gen.py` — generator: takes a seed arg, prints one small-case input.
-  ジェネレータ: シードを引数に取り、小さなケースの入力を 1 つ出力。
-- `brute.cs` / `brute.py` — reference: reads that input, prints the correct answer.
-  参照解: その入力を読み、正しい答えを出力。
-- `main.cs` — your solution under test. あなたの検証対象の解。
+### Build & Run
 
-`.cs` / `.py` are auto-detected per file. `.cs`/`.py` はファイルごとに自動判別。
+Build and execute the current solution:
 
-| Usage | English | 日本語 |
-| --- | --- | --- |
-| `stress` | 300 cases, stop at first mismatch. | 300 ケース、最初の不一致で停止。 |
-| `stress <N>` | Run `N` cases. | `N` ケース実行。 |
-| `stress -k` | Keep going; list every mismatch. | 続行して全ての不一致を表示。 |
-| `stress --init` | Scaffold starter `gen.cs` / `brute.cs`. | `gen.cs` / `brute.cs` の雛形を生成。 |
+```bash
+run
+```
 
-On mismatch it prints the seed, input, expected (brute) and got (`main.cs`).
-不一致時はシード・入力・期待値（参照解）・実際の出力（`main.cs`）を表示します。
+Input can also be provided from a file:
 
-Build artifacts (`.stress/`) and `gen.*` / `brute.*` are git-ignored — testing never dirties git.
-ビルド成果物（`.stress/`）と `gen.*` / `brute.*` は git 管理外 — テストで git が汚れません。
+```bash
+run input.txt
+```
+
+### Submission Code Generation
+
+Generate a submission-ready `main.cs` containing only the libraries actually used by the solution:
+
+```bash
+wind
+```
+
+The generated code is copied to the clipboard for submission.
+
+### Stress Testing
+
+Compare the solution against a brute-force reference implementation using randomly generated test cases:
+
+```bash
+stress
+```
+
+By default, 300 test cases are generated and execution stops at the first mismatch.
+
+Run a custom number of cases:
+
+```bash
+stress 1000
+```
+
+Continue running after mismatches:
+
+```bash
+stress -k
+```
+
+Create the generator and brute-force solution templates automatically:
+
+```bash
+stress --init
+```
+
+## Stress Testing Workflow
+
+A typical stress-testing setup consists of three programs:
+
+```text
+           Random Input
+                |
+                v
+          +-----------+
+          | Generator |
+          +-----------+
+                |
+                v
+        +-------+-------+
+        |               |
+        v               v
+   main.cs          brute.cs
+   solution         reference
+        |               |
+        +-------+-------+
+                |
+                v
+         Compare Outputs
+                |
+          +-----+-----+
+          |           |
+        Match      Mismatch
+                      |
+                      v
+             Print seed,
+             input,
+             expected,
+             actual
+```
+
+The generator produces small random test cases. The brute-force implementation provides a trusted reference answer, and `main.cs` is tested against it.
+
+When a mismatch occurs, MakaCoder reports the random seed, input, expected output, and actual output, making the failing case reproducible.
+
+## File Conventions
+
+The stress-testing workflow uses:
+
+```text
+gen.cs / gen.py      # random test generator
+brute.cs / brute.py  # reference solution
+main.cs              # solution under test
+```
+
+C# and Python files are detected automatically.
+
+Generated build artifacts and stress-testing files are kept out of Git so that running tests does not modify the working tree.
+
+## Technology
+
+| Component          | Technology                |
+| ------------------ | ------------------------- |
+| Primary language   | C#                        |
+| Additional tooling | Python                    |
+| Shell environment  | zsh                       |
+| Editor integration | VS Code                   |
+| Testing            | Randomized stress testing |
+| Reference testing  | Brute-force solutions     |
+
+## Repository Structure
+
+```text
+MakaCoder/
+├── active/       # active templates
+├── archive/      # archived templates
+├── rst            # reset solution
+├── run            # build & run
+├── wind           # generate submission code
+├── stress         # randomized differential testing
+├── setup.sh       # environment setup
+└── wind.py        # submission-code generation
+```
+
+## Design Philosophy
+
+Competitive programming requires repeatedly solving problems under time constraints. The development environment therefore has a significant effect on iteration speed.
+
+MakaCoder focuses on automating tasks that are repetitive but error-prone:
+
+* resetting a solution to a known template
+* compiling and running code
+* preparing submission code
+* checking optimized solutions against brute-force references
+* reproducing incorrect cases through deterministic random seeds
+
+The stress-testing workflow is particularly useful for algorithmic problems where the optimized solution is difficult to verify manually. Instead of relying only on manually constructed test cases, a brute-force implementation can serve as an executable specification for small inputs.
+
+## Getting Started
+
+Clone the repository and run the setup script:
+
+```bash
+./setup.sh
+```
+
+After setup, the commands become available when working inside the repository.
+
+For example:
+
+```bash
+rst
+run
+stress --init
+stress
+wind
+```
+
+## Example Development Workflow
+
+```text
+1. Initialize solution
+       ↓
+2. Implement algorithm
+       ↓
+3. Write brute-force reference
+       ↓
+4. Generate random tests
+       ↓
+5. Compare optimized solution
+       ↓
+6. Investigate mismatches
+       ↓
+7. Fix implementation
+       ↓
+8. Generate submission-ready code
+```
+
+MakaCoder is primarily a personal tool, but the workflow is designed around reproducible and systematic verification rather than ad-hoc testing.
